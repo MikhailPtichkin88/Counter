@@ -1,35 +1,40 @@
 import React from 'react';
 import Button from "../Button";
 import Display from './Display'
-import {InputErrorType} from "../App";
+import {useDispatch, useSelector} from "react-redux";
+import {RootStateType} from "../state/store";
+import {CounterType, increaseCountAC, resetCountAC} from "../state/counter-reducer";
+import {ParamsType} from "../state/params-reducer";
 
-type CounterPropsType = {
-    increaseCount: () => void
-    resetCount: () => void
-    maxCount: number
-    startCount: number
-    count: number
-    error: InputErrorType
-    inputState: boolean
-}
 
-const Counter = (props: CounterPropsType) => {
+const Counter = () => {
+    const params = useSelector<RootStateType, ParamsType>(state=>state.params)
+    const counter = useSelector<RootStateType, CounterType>(state=>state.counter)
+    const dispatch = useDispatch()
 
-    let isResetDisabled = !props.inputState || (props.count === props.startCount)
+    function increaseCount(){
+        dispatch(increaseCountAC())
+    }
+    function resetCount(){
+        dispatch(resetCountAC(params.inputStartValue))
+    }
+
+    let isIncDisabled = params.inputState || (counter.count === params.inputMaxValue)
+    let isResetDisabled = params.inputState || (counter.count === params.inputStartValue)
     return (
 
         <div className="counter">
-            <Display count={props.count}
-                     error={props.error}
-                     maxCount={props.maxCount}
-                     startCount={props.startCount}
-                     inputState={props.inputState}/>
+            <Display count={counter.count}
+                     error={params.error}
+                     maxCount={params.inputMaxValue}
+                     startCount={params.inputStartValue}
+                     inputState={params.inputState}/>
             <div className="buttons_wrapper">
                 <Button title="Incr"
-                        function={props.increaseCount}
-                        isDisabled={!props.inputState}/>
+                        function={increaseCount}
+                        isDisabled={isIncDisabled}/>
                 <Button title="Reset"
-                        function={props.resetCount}
+                        function={resetCount}
                         isDisabled={isResetDisabled}/>
             </div>
         </div>

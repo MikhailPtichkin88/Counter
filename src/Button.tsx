@@ -9,7 +9,6 @@ type UniButtonPropsType = {
 
 const Button = (props: UniButtonPropsType) => {
 
-
     return (
         <>
             <button onClick={props.function}

@@ -1,20 +1,22 @@
 import React, {ChangeEvent} from 'react';
-import {InputErrorType} from "../../App";
+
 
 type ValueType = {
     title:string
     setValue: (value:number) => void
     inputValue: number
     error:boolean
-    checkDisabled: (error:InputErrorType) => void
-    setInputStateChanger:(inputState:boolean)=>void
+    setInputStateChanger:()=>void
 }
 
 const Value = (props:ValueType) => {
 
+
+
 let InputClass = (props.error ? "error_input" : "") + " value_input"
     const onChangeHandler = (e:ChangeEvent<HTMLInputElement>) =>{
-        props.setInputStateChanger(false)
+        // setValue(+e.currentTarget.value)
+        props.setInputStateChanger()
         props.setValue(+e.currentTarget.value)
     }
 

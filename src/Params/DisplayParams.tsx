@@ -1,36 +1,39 @@
 import React from 'react';
 import Value from "./Value/Value";
-import {InputErrorType} from "../App";
+import {useDispatch, useSelector} from "react-redux";
+import {RootStateType} from "../state/store";
+import {changeInputStateAC, changeMaxValueAC, changeStartValueAC, ParamsType} from "../state/params-reducer";
 
-type DispalyParamsType = {
-    inputMaxValue: number
-    inputStartValue: number
-    setInputStart: (value: number) => void
-    setInputMax: (value: number) => void
-    checkDisabled: (error: InputErrorType) => void
-    error: InputErrorType
-    setInputStateChanger:(inputState:boolean)=>void
-}
+const DisplayParams = () => {
 
-const DisplayParams = (props: DispalyParamsType) => {
+    const params = useSelector<RootStateType, ParamsType>(state => state.params)
+    const dispatch = useDispatch()
 
-    let inputMaxError = props.error === "maxError" || props.error ==="all"
-    let inputStartError = props.error === "startError" || props.error ==="all"
+    function setMaxValue (value:number){
+        dispatch(changeMaxValueAC(value))
+    }
+    function setStartValue (value:number){
+        dispatch(changeStartValueAC(value))
+    }
+    function setInputStateChanger(){
+        dispatch(changeInputStateAC(true))
+    }
+
+    let inputMaxError = params.error === "maxError" || params.error ==="all"
+    let inputStartError = params.error === "startError" || params.error ==="all"
 
     return (
         <div className="display_wrapper display_params">
             <Value title="max value:"
-                   setValue={props.setInputMax}
-                   inputValue={props.inputMaxValue}
+                   setValue={setMaxValue}
+                   inputValue={params.inputMaxValue}
                    error={inputMaxError}
-                   checkDisabled={props.checkDisabled}
-                   setInputStateChanger={props.setInputStateChanger}/>
+                   setInputStateChanger={setInputStateChanger}/>
             <Value title="start value:"
-                   setValue={props.setInputStart}
-                   inputValue={props.inputStartValue}
+                   setValue={setStartValue}
+                   inputValue={params.inputStartValue}
                    error={inputStartError}
-                   checkDisabled={props.checkDisabled}
-                   setInputStateChanger={props.setInputStateChanger}/>
+                   setInputStateChanger={setInputStateChanger}/>
         </div>
     );
 };

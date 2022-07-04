@@ -1,6 +1,7 @@
 import React from 'react';
 import '../App.css'
-import {InputErrorType} from "../App";
+import {InputErrorType} from "../state/params-reducer";
+
 
 type DisplayPropsType = {
     count: number
@@ -12,11 +13,9 @@ type DisplayPropsType = {
 
 const Display = (props: DisplayPropsType) => {
 
-    // let [title, setTitle] =  useState<number | string>()
-
     let title:number | string = props.startCount;
 
-    if(!props.inputState) {
+    if(props.inputState) {
         title = "enter values and press set"
     }else{
         title=props.count
@@ -28,7 +27,7 @@ const Display = (props: DisplayPropsType) => {
     let a = "count_num"
     if (props.count === props.maxCount || props.error !== 'none') {
         a += " disabled"
-    } else if(!props.inputState){
+    } else if(props.inputState){
         a += " fontSize"
     }
 
