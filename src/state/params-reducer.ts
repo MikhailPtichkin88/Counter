@@ -1,17 +1,12 @@
 export type InputErrorType = "maxError" | "startError" | "all" | "none"
-// type ParamsType ={
-//     inputMaxValue: number,
-//     inputStartValue: number,
-//     error: InputErrorType,
-//     inputState: boolean,
-// }
 
 let initialState = {
     inputMaxValue: 7,
     inputStartValue: 0,
     error: "none" as InputErrorType,
-    inputState: false,
+    inputState: true,
 }
+
 export type ParamsType = typeof initialState
 
 export const paramsReducer = (params: ParamsType = initialState, action: ActionType): ParamsType => {
