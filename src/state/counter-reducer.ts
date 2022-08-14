@@ -17,12 +17,14 @@ export const counterReducer = (counter:CounterType=initialState, action: ActionT
             return {...counter, count:counter.count + 1}
         case "RESET-COUNT":
             return {...counter, count:action.payload.startValue}
+        case "SET-VALUE-FROM-LOCAL-STORAGE":
+            return {...counter, count:action.payload.value}
         default:
             return counter
     }
 }
 
-type ActionType = ChangeMaxValueACType |ChangeStartValueACType |  ChangeCountACType | IncreaseCountACType | ResetCountACType
+type ActionType = ChangeMaxValueACType |ChangeStartValueACType |  ChangeCountACType | IncreaseCountACType | ResetCountACType | setValuesFromLocalStorageACType
 
 type ChangeCountACType = ReturnType<typeof ChangeCountAC>
 export const ChangeCountAC = (value:number)=>{
@@ -49,4 +51,14 @@ export const resetCountAC = (startValue:number)=>{
             startValue
         }
     }as const
+}
+
+type setValuesFromLocalStorageACType = ReturnType<typeof setValuesFromLSAC>
+export const setValuesFromLSAC = (value:number) => {
+    return {
+        type: "SET-VALUE-FROM-LOCAL-STORAGE",
+        payload:{
+            value
+        }
+    } as const
 }
